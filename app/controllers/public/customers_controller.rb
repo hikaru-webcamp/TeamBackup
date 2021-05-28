@@ -20,7 +20,7 @@ class Public::CustomersController < ApplicationController
   def out
     @customer = current_customer
     @customer.update(is_deleted: true)
-    reset_session
+    reset_session #ログアウト
     redirect_to root_path, alert: "退会しました"
   end
 

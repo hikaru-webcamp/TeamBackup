@@ -2,6 +2,7 @@ class Public::CartProductsController < ApplicationController
   before_action :authenticate_customer!
   def index
     @cart_products = CartProduct.where(customer_id: current_customer.id)
+    @cart_products = current_customer.cart_products
     @total_price = 0
     @cart_products.each do |cart_product|
       @total_price += cart_product.product.tax_price * cart_product.quantity
@@ -18,7 +19,7 @@ class Public::CartProductsController < ApplicationController
     else
       cart_product.save
     end
-    redirect_to cart_products_path, notice: "カートに追加しました"
+    redirect_to(cart_products_path, notice: "カートに追加しました")
   end
 
   def update
@@ -43,6 +44,7 @@ class Public::CartProductsController < ApplicationController
 
   def destroy_all
     cart_products = CartProduct.where(customer_id: current_customer.id)
+    byebug
     cart_products.destroy_all
     redirect_to cart_products_path, alert: "カートを空にしました"
   end

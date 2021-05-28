@@ -4,8 +4,8 @@ Rails.application.routes.draw do
     get 'about' => 'homes#about'
     resource :customers, only: [:edit, :update] do
       get 'my_page' => 'customers#show'
-      get 'out_confirm'
-      patch 'out'
+      get 'out_confirm' => 'customers#out_confirm'
+      patch 'out' => 'customers#out'
     end
     devise_for :customers, only: [:sessions, :registrations]
     resources :products, only: [:index, :show]
